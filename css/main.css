@@ -1,0 +1,128 @@
+body{
+	margin:0;
+	font-family: 'Chewy', cursive;
+	/*make all text unselectable.*/
+	-webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    background:url("../images/bodybg.jpg");
+    background-position: cover;
+    animation:jumpAround 1.3s infinite;
+}
+
+div {
+	
+
+}
+
+@keyframes jumpAround{
+	0%,25%,100%{background-position: 50% 10%;}
+	25.01%{background-position: 0% 0%;}
+
+	50%{background-position: 0% 0%;}
+	50.01%{background-position: 30% 20%;}
+
+	75%{background-position: 30% 20%;}
+	75.01%{background-position: 50% 10%;}
+}
+
+.calculator {
+	animation: jumpAround 1s infinite;
+	width:800px;height:800px;
+	margin:0 auto;
+	background:pink;
+	background:url("../images/calcbg.jpg");
+	border-radius: 120px;
+	border: 2px solid black;
+	box-shadow: 0 30px rgb(158, 22, 121),0 32px black;
+}
+
+.viewport{
+	width:600px;height:100px;
+	font-size: 40px;
+	position:relative;
+	top:50px;
+	left:87px;
+	background:yellow;
+	border: 2px solid black;
+	border-radius: 20px 20px 0 0;
+	word-wrap: break-word;
+	overflow-y: scroll;
+	box-shadow: inset 0 4px rgba(0,0,0,0.5);
+
+}
+
+.buttonContainer{
+	width:600px;height:500px;
+	display:flex;
+	flex-wrap: wrap;
+	position:relative;
+	top:100px;
+	left:87px;
+	padding:2px;
+}
+
+.warning{
+	position:relative;
+	top:-50px;
+	font-size:30px;
+	color:white;
+	text-shadow: 0 0 20px rgb(80%,80%,80%);
+	display:none;
+}
+
+.button {
+	flex:1;
+	/*width:146px; flex negates this*/height:122px;
+	font-size: 70px;
+	flex-basis: 20%;
+	background:rgb(117, 37, 168);
+	border-radius: 40px;
+	border: 2px solid black;
+	box-shadow: 0 6px rgb(83, 22, 122),0 8px black;
+	transform: translateY(-8px);
+	transition:0.1s;
+	text-align: center;
+	line-height: 120px;
+}
+
+.button:active {
+	background:rgb(117, 37, 168);
+	box-shadow: 0 2px rgb(83, 22, 122),0 4px black;
+	transform: translateY(-4px);
+	transition:0.1s;
+	color:green;
+	text-shadow: 0 0 10px rgb(89, 255, 84);
+}
+
+.buttonNum {
+	flex:1;
+	/*width:146px; flex negates this*/height:122px;
+	font-size: 70px;
+	flex-basis: 20%;
+	background:rgb(255, 162, 40);
+	box-shadow: 0 6px rgb(198, 125, 29),0 8px black;
+	transform: translateY(-8px);
+	border-radius: 40px;
+	border: 2px solid black;
+	text-align:center; 
+	line-height: 120px;
+	transition:0.1s;
+}
+
+.buttonNum:active {
+	background:rgb(255, 162, 40);
+	box-shadow: 0 2px rgb(198, 125, 29),0 4px black;
+	transform: translateY(-4px);
+	transition:0.1s;
+	color:green;
+	text-shadow: 0 0 10px rgb(89, 255, 84);
+}
+
+#avg:hover ~ .warning{
+	display:inline;
+}
+
+
+.button:hover{
+	/* stuff will go here eventually */
+}

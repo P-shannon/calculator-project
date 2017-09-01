@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="../css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Chewy" rel="stylesheet">
+	<title></title>
+</head>
+<body>
+<div class="calculator">
+	<div class="viewport" onclick="calculate()">Click me to evalute the expression.</div>
+	<div class="buttonContainer">
+		<div class="buttonNum" id="one" onclick="input(this)">1</div>
+		<div class="buttonNum" onclick="input(this)" id="two">2</div>
+		<div class="buttonNum" onclick="input(this)" id="three">3</div>
+		<div class="button" onclick="input(this)" id="plus">+</div>
+		<br>
+		<div class="buttonNum" onclick="input(this)" id="four">4</div>
+		<div class="buttonNum" onclick="input(this)" id="five">5</div>
+		<div class="buttonNum" onclick="input(this)" id="six">6</div>
+		<div class="button" onclick="input(this)" id="minus">-</div>
+		<br>
+		<div class="buttonNum" onclick="input(this)" id="seven">7</div>
+		<div class="buttonNum" onclick="input(this)" id="eight">8</div>
+		<div class="buttonNum" onclick="input(this)" id="nine">9</div>
+		<div class="button" onclick="input(this)" id="mult">*</div>
+		<br>
+		<div class="buttonNum" onclick="input(this)" id="zero">0</div>
+		<div class="button" onclick="resetView()" id="clear">A/C</div>
+		<div class="button" onclick="avg()" id="avg">AVG</div>
+		<div class="button" onclick="input(this)" id="divide">/</div>
+		<div class="warning">Please use '+' to separate values for averaging.</div>
+	</div>
+</div>
+
+<audio id="honk" src="../sounds/bikehorn.ogg"></audio>
+
+<script type="text/javascript">
+	var initClear = false;
+	var view = document.getElementsByClassName('viewport');
+
+	function play(ele){
+		var sound = document.getElementById(ele);
+		if (sound.paused){
+			sound.play();
+		}
+		else{
+			sound.pause();
+			sound.currentTime = 0;
+			sound.play();
+		}
+	}
+
+	function dismiss(){
+		var warn = document.getElementsByClassName("warning");
+		warn[0].innerHTML = "";
+	}
+
+	function input(ele){
+		if (initClear == false){
+			clearView();
+			initClear = true;
+		}
+		var button = document.getElementById(ele.id);
+		view[0].innerHTML += button.innerHTML;
+		//scroll to the bottom of the view port
+		view[0].scrollTop = view[0].scrollHeight;
+		//shuffle buttons on button press
+		randomize();
+		play("honk");
+	}
+	function clearView(){
+		view[0].innerHTML = "";
+		randomize();
+		play("honk");
+	}
+
+	function resetView(){
+		view[0].innerHTML = "Click me to honk the expression.";
+		initClear = false;
+		randomize();
+		play("honk");
+	}
+	
+
+	function calculate(){
+		view[0].innerHTML = eval(view[0].innerHTML);
+		play("honk");
+	}
+	function avg(){
+		var i = 0;
+		var avgSum = 0;
+		var avgTot = 0;
+		var arr = view[0].innerHTML.split("+");
+		//just to make sure it's working.
+		console.log(arr);
+		while(i < arr.length){
+			avgSum += Number(arr[i]);
+			console.log("adding "+avgSum);
+			i++;
+		}
+		avgTot = avgSum/arr.length;
+		console.log("dividing "+avgTot);
+		view[0].innerHTML = avgTot;
+		dismiss();
+		randomize();
+		play("honk");
+	}
+	function randomize(){
+		//shuffle our numbers...
+		console.log("shuffling...");
+		var random = 0;
+		var i = 0;
+		var temp = 0;
+		var nums = [0,1,2,3,4,5,6,7,8,9];
+		var max = nums.length - 1;
+		while (i < max){
+			random = Math.floor(Math.random()*max);
+			//The good ol' swaparoo
+			temp = nums[max];
+			nums[max] = nums[random];
+			nums[random] = temp;
+			console.log(nums);
+			//decrement max to ensure the same number isn't shuffled twice
+			max--;
+			i++;
+		}
+		i = 0;
+		//now assign the shuffled numbers to our number pad
+		var button = document.getElementsByClassName("buttonNum");
+		while (i < button.length){
+			console.log("assigning "+button[i].id+" the value of "+nums[i]);
+			button[i].innerHTML=nums[i];
+			i++
+		}
+
+	}
+	/*attempt #1 preserved for posterity
+	read at your own risk.
+	{
+		var buttons = document.getElementsByClassName('buttonNum');
+		var temp = 0;
+		var i = 0;
+		while(i < buttons.length){
+			buttons[i].innerHTML = "assigning";
+			i++
+		}
+		i=0;
+		while(i < buttons.length){
+			//for every step, check ALL of button's values
+			var found = false;
+			var n = 0;
+			temp = Math.floor(Math.random()*9);
+			//start searching
+			while (n < buttons.length){
+				if (temp == Number(buttons[n].innerHTML)){
+					//found a match and we need a new number
+					found = true;//Why is this here?
+					console.log("match found: "+buttons[n].id);
+					break;
+				}
+				else {
+					//number doesn't match, move on.
+					console.log("No match found: "+buttons[n].id);
+				}
+				n++;
+			}
+			if (found == false){
+				//we checked all numbers and none of them matched, assign the number and move on.
+				console.log("Assigning value at "+buttons[i].id);
+				buttons[i].innerHTML=temp;
+				i++;
+			}
+			else {
+				//a number was found, we need to try again, no increment.
+				console.log("search failed at "+buttons[i].id+" retrying.");
+			}
+
+		}
+	}*/
+</script>
+
+</body>
+</html>
